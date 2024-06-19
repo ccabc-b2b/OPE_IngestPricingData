@@ -7,13 +7,11 @@ namespace IngestHTTP
     {
         static void Main(string[] args)
         {
-
             try
             {
                 ConfigurationBuilder builder = new ConfigurationBuilder();
                 builder.AddAzureKeyVault(new Uri(Properties.Settings.Default.KeyVaultURI), new DefaultAzureCredential());
-                IConfiguration configuration = builder.Build();
-                
+                IConfiguration configuration = builder.Build();              
                 Authentication authenticate = new Authentication(configuration);
                 string token = authenticate.AuthenticateData();
                 FetchMasterData jsonData = new FetchMasterData(configuration);
@@ -26,8 +24,7 @@ namespace IngestHTTP
                 IConfiguration configuration = builder.Build();
                 Logger logger = new Logger(configuration);
                 logger.ErrorLogData(ex, ex.Message);
-            }
-            
+            }        
         }
     }
 }

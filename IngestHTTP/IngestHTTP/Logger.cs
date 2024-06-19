@@ -13,7 +13,6 @@ namespace IngestHTTP
         {
             _configuration = configuration;
         }
-
         public async void ErrorLogData(Exception ex, string errorMessage)
         {
             var channel = new InMemoryChannel();
@@ -29,10 +28,8 @@ namespace IngestHTTP
                         configureApplicationInsightsLoggerOptions: (options) => { }
                     );
                 });
-
                 IServiceProvider serviceProvider = services.BuildServiceProvider();
                 ILogger<Program> logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-
                 logger.LogError(ex, errorMessage);
             }
             finally

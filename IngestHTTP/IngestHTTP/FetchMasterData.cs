@@ -12,12 +12,10 @@ namespace IngestHTTP
         readonly static string containerName = Properties.Settings.Default.ContainerName;
         static string blobDirectoryPrefix = Properties.Settings.Default.BlobDirectoryPrefix;
         private readonly IConfiguration _configuration;
-
         public FetchMasterData(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
         public void getData(string process,string token)
         {
             try
@@ -25,21 +23,18 @@ namespace IngestHTTP
                 var client = new HttpClient();
                 var baseAddress = _configuration["IngestHTTPBaseAddress"];
                 client.BaseAddress = new Uri(baseAddress);
-
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 int count = Convert.ToInt32(_configuration["Count"]);
                 var processAddress = _configuration[process + "Address"];
                 processAddress = processAddress + "page=1" + "&count=" + count;
                 var response = client.GetAsync(processAddress).Result;
                 var json = response.Content.ReadAsStringAsync().Result;
-
                 if (response.IsSuccessStatusCode == true)
                 {
                     ProcessJsonEntity processdataList = JsonConvert.DeserializeObject<ProcessJsonEntity>(json);
                     var total = Convert.ToInt32(processdataList.total);
                     int totalPage = (total / count);
                     var page = 1;
-
                     do
                     {
                         processAddress = _configuration[process + "Address"];
@@ -54,7 +49,6 @@ namespace IngestHTTP
                             containerClient.UploadBlob(blobDirectoryPrefix + process + "/" + process + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + page, stream);
                         }
                         page++;
-
                     } while (page <= totalPage);
                 }
                 else

@@ -26,12 +26,9 @@ namespace IngestHTTP
                 var client = new HttpClient();
                 var baseAddress = _configuration["IngestHTTPBaseAddress"];
                 client.BaseAddress = new Uri(baseAddress);
-
                 var json = JsonSerializer.Serialize(postData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-
                 var response = client.PostAsync("authenticate", content).Result;
-
                 if (response.IsSuccessStatusCode == true)
                 {
                     var responseContent = response.Content.ReadAsStringAsync().Result;
@@ -52,7 +49,6 @@ namespace IngestHTTP
             }
             return Token;
         }
-
         public string GenerateToken(string req)
         {
             if (req.StartsWith("Bearer"))
