@@ -1,19 +1,9 @@
-﻿using IngestHTTP.Models;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using Azure.Storage.Blobs;
+using IngestHTTP.Models;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using ErrorEventArgs = Newtonsoft.Json.Serialization.ErrorEventArgs;
-using Azure.Storage.Blobs;
-using Microsoft.Azure.Storage;
-using Microsoft.Azure.Storage.Blob;
-using Microsoft.Extensions.Configuration;
 
 namespace IngestHTTP
 {
@@ -66,7 +56,6 @@ namespace IngestHTTP
                         page++;
 
                     } while (page <= totalPage);
-
                 }
                 else
                 {
@@ -79,8 +68,6 @@ namespace IngestHTTP
                 Logger logger = new Logger(_configuration);
                 logger.ErrorLogData(ex,ex.Message);
             }
-
-
         }
     }
 }

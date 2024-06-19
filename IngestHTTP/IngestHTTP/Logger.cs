@@ -1,9 +1,9 @@
 ﻿using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.ApplicationInsights;
-using Microsoft.Extensions.Configuration;
+
 namespace IngestHTTP
 {
     public class Logger
@@ -33,9 +33,7 @@ namespace IngestHTTP
                 IServiceProvider serviceProvider = services.BuildServiceProvider();
                 ILogger<Program> logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
-                // logger.LogInformation(errorMessage);
                 logger.LogError(ex, errorMessage);
-
             }
             finally
             {
@@ -43,8 +41,6 @@ namespace IngestHTTP
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
                 System.Environment.Exit(0);
             }
-
-
         }
     }
 }

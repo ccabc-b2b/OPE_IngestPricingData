@@ -1,12 +1,5 @@
 ﻿using Azure.Identity;
-using FluentAssertions.Common;
-using IngestHTTP.Models;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Configuration;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 
 namespace IngestHTTP
 {

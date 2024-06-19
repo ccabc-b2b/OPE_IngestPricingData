@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-//using System.Configuration;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Net.Http;
+﻿using IngestHTTP.Models;
+using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using IngestHTTP.Models;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using Microsoft.Extensions.Configuration;
-//using Microsoft.Extensions.Configuration;
 
 namespace IngestHTTP
 {
@@ -53,9 +43,7 @@ namespace IngestHTTP
                 {
                     Logger logger = new Logger(_configuration);
                     logger.ErrorLogData(null, "Response Status Code Failed");                
-                }
-
-               
+                } 
             }
             catch (Exception ex)
             {
