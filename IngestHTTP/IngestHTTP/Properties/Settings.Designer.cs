@@ -43,7 +43,7 @@ namespace IngestHTTP.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://kv-gccb-ope-qas.vault.azure.net/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://kv-gccb-ope-prod.vault.azure.net/\n ")]
         public string KeyVaultURI {
             get {
                 return ((string)(this["KeyVaultURI"]));
