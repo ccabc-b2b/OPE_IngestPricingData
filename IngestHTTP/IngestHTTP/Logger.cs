@@ -36,7 +36,7 @@ namespace IngestHTTP
             {
                 channel.Flush();
                 await Task.Delay(TimeSpan.FromMilliseconds(1000));
-                System.Environment.Exit(0);
+              //  System.Environment.Exit(0);
             }
         }
     }

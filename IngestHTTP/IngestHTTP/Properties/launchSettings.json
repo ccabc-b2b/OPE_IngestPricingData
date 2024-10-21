@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "IngestHTTP": {
+      "commandName": "Project",
+      "commandLineArgs": "pricing"
+    }
+  }
+}

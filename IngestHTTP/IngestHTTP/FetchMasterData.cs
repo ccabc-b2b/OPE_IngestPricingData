@@ -33,7 +33,7 @@ namespace IngestHTTP
                 {
                     ProcessJsonEntity processdataList = JsonConvert.DeserializeObject<ProcessJsonEntity>(json);
                     var total = Convert.ToInt32(processdataList.total);
-                    int totalPage = (total / count);
+                    int totalPage = (int)Math.Ceiling((double)total / (double)count);
                     var page = 1;
                     do
                     {
