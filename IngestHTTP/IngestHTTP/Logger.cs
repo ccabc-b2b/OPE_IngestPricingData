@@ -9,6 +9,8 @@ namespace IngestHTTP
     public class Logger
     {
         private readonly IConfiguration _configuration;
+        public readonly Enum severityLevel;
+
         public Logger(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -30,7 +32,8 @@ namespace IngestHTTP
                 });
                 IServiceProvider serviceProvider = services.BuildServiceProvider();
                 ILogger<Program> logger = serviceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, errorMessage);
+                //logger.LogError(ex, errorMessage);
+                logger.Log(LogLevel.Error,ex,errorMessage);
             }
             finally
             {
