@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace IngestHTTP
 {
@@ -19,12 +20,12 @@ namespace IngestHTTP
             {
                 var postData = new AuthRequest
                 {
-                    username = _configuration["Username"],
-                    password = _configuration["Password"],
-                    companyid = Convert.ToInt32(_configuration["CompanyId"]),
+                    username = "ope.gccb@coca-cola.com",
+                    password = "0p3G((b@2024",
+                    companyid = 0,
                 };
                 var client = new HttpClient();
-                var baseAddress = _configuration["IngestHTTPBaseAddress"];
+                var baseAddress ="http://10.165.12.50:7000/";
                 client.BaseAddress = new Uri(baseAddress);
                 var json = JsonSerializer.Serialize(postData);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");

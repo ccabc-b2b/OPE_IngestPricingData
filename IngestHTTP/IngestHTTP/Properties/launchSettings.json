@@ -2,7 +2,7 @@
   "profiles": {
     "IngestHTTP": {
       "commandName": "Project",
-      "commandLineArgs": "promotion"
+      "commandLineArgs": "customer"
     }
   }
 }

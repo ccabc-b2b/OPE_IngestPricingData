@@ -10,7 +10,7 @@ namespace IngestHTTP
             try
             {
                 ConfigurationBuilder builder = new ConfigurationBuilder();
-                builder.AddAzureKeyVault(new Uri(Properties.Settings.Default.KeyVaultURI), new DefaultAzureCredential());
+                //builder.AddAzureKeyVault(new Uri(Properties.Settings.Default.KeyVaultURI), new DefaultAzureCredential());
                 IConfiguration configuration = builder.Build();              
                 Authentication authenticate = new Authentication(configuration);
                 string token = authenticate.AuthenticateData();

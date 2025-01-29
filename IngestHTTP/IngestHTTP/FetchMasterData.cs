@@ -22,44 +22,45 @@ namespace IngestHTTP
             try
             {
                 var client = new HttpClient();
-                var baseAddress = _configuration["IngestHTTPBaseAddress"];
+                var baseAddress = "http://10.165.12.50:7000/";
                 client.BaseAddress = new Uri(baseAddress);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                int count = Convert.ToInt32(_configuration["Count"]);
-                var processAddress = _configuration[process + "Address"];
+                int count =1000;
+                var processAddress = "api/deal/allrecords?";
                 processAddress = processAddress + "page=1" + "&count=" + count;
                 var response = client.GetAsync(processAddress).Result;
                 var json = response.Content.ReadAsStringAsync().Result;
 
-                var timer = new Stopwatch();
+                //var timer = new Stopwatch();
 
                 if (response.IsSuccessStatusCode == true)
-                {
-                    timer.Start();
+                    {
                     ProcessJsonEntity processdataList = JsonConvert.DeserializeObject<ProcessJsonEntity>(json);
                     var total = Convert.ToInt32(processdataList.total);
                     int totalPage = (int)Math.Ceiling((double)total / (double)count);
                     var page = 1;
-
+                    do
+                        {
                         processAddress = _configuration[process + "Address"];
                         processAddress = processAddress + "page=" + page + "&count=" + count;
                         response = client.GetAsync(processAddress).Result;
                         json = response.Content.ReadAsStringAsync().Result;
-                        
+
                         BlobServiceClient blobServiceClient = new BlobServiceClient(_configuration["StorageKey"]);
                         BlobContainerClient containerClient = new BlobContainerClient(_configuration["StorageKey"], containerName);
                         using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
-                        {
+                            {
                             containerClient.UploadBlob(blobDirectoryPrefix + process + "/" + process + "_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + "_" + page, stream);
-                        }
-                    timer.Stop();
-                    TimeSpan timeTaken = timer.Elapsed;
-                    string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
-
-                    Logger logger = new Logger(_configuration);
-                    logger.ErrorLogData(null, "Time taken to proccess the data with batch size as "+count+" is "+foo);
-
+                            }
+                        page++;
+                        } while (page <= totalPage);
                     }
+                    //timer.Stop();
+                    //TimeSpan timeTaken = timer.Elapsed;
+                    //string foo = "Time taken: " + timeTaken.ToString(@"m\:ss\.fff");
+
+                    //Logger logger = new Logger(_configuration);
+                    //logger.ErrorLogData(null, "Time taken to proccess the data with batch size as "+count+" is "+foo);
                 else
                 {
                     Logger logger = new Logger(_configuration);
@@ -69,7 +70,7 @@ namespace IngestHTTP
             catch (Exception ex)
             {
                 Logger logger = new Logger(_configuration);
-                logger.ErrorLogData(ex,ex.Message);
+                logger.ErrorLogData(ex,ex.ToString());
             }
         }
     }
